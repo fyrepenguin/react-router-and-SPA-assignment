@@ -1,32 +1,17 @@
 import React from 'react'
 import Sidebar from './Sidebar';
 import Chat from './Chat';
+import { useChats } from '../contexts/ChatsProvider';
+import { useAuth } from '../contexts/AuthProvider';
 
-export default function Dashboard({
-  email,
-  selectedChat,
-  contacts,
-  deleteContact,
-  createContact,
-  chats,
-  createChat,
-  deleteChat,
-  selectChatIndex,
-  sendMessage }) {
+export default function Dashboard() {
+  const { selectedChat } = useChats()
+  const auth = useAuth()
 
   return (
     <div className='dashboard'>
-      <Sidebar email={email}
-        contacts={contacts}
-        deleteContact={deleteContact}
-        createContact={createContact}
-        chats={chats}
-        createChat={createChat}
-        deleteChat={deleteChat}
-        selectedChat={selectedChat}
-        selectChatIndex={selectChatIndex}
-      />
-      {selectedChat && <Chat sendMessage={sendMessage} selectedChat={selectedChat} />}
+      <Sidebar email={auth.email} />
+      {selectedChat && <Chat />}
     </div>
   )
 }

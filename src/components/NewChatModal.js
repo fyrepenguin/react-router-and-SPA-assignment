@@ -1,6 +1,8 @@
 import React from 'react'
+import { useContacts } from '../contexts/ContactsProvider';
 
-export default function NewChatModal({ closeModal, contacts }) {
+export default function NewChatModal({ closeModal }) {
+  const { contacts } = useContacts();
 
   return (
     <>

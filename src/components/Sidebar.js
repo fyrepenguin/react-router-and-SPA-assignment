@@ -3,11 +3,15 @@ import ChatList from './ChatList'
 import ContactList from './ContactList'
 import NewContactModal from './NewContactModal'
 import NewChatModal from './NewChatModal'
+import { useAuth } from '../contexts/AuthProvider';
+import { useNavigate } from 'react-router-dom';
 
 const CHATS_KEY = 'chats'
 const CONTACTS_KEY = 'contacts'
 
-export default function Sidebar({ email, chats, contacts, selectChatIndex, deleteChat, deleteContact, createContact, createChat }) {
+export default function Sidebar({ email }) {
+  let auth = useAuth();
+  let navigate = useNavigate();
 
   const [activeKey, setActiveKey] = useState(CHATS_KEY)
   const [modalOpen, setModalOpen] = useState(false)
@@ -30,10 +34,10 @@ export default function Sidebar({ email, chats, contacts, selectChatIndex, delet
       <div
         className='sidebar-content'>
         {activeKey === CHATS_KEY && <div>
-          <ChatList chats={chats} selectChatIndex={selectChatIndex} deleteChat={deleteChat} />
+          <ChatList />
         </div>}
         {activeKey === CONTACTS_KEY && <div>
-          <ContactList contacts={contacts} deleteContact={deleteContact} />
+          <ContactList />
         </div>}
       </div>
       <div className="account-info">
@@ -41,7 +45,7 @@ export default function Sidebar({ email, chats, contacts, selectChatIndex, delet
           Your Email: <span className="account-info__email">{email}</span>
         </span>   <button
           onClick={() => {
-            //    auth.logout(() => navigate("/login"));
+            auth.logout(() => navigate("/login"));
           }}
         >
           logout
@@ -54,8 +58,8 @@ export default function Sidebar({ email, chats, contacts, selectChatIndex, delet
       <div className={`modal ${modalOpen ? 'open' : ''}`} id="modal">
         <div className="modal-content">
           {chatsOpen ?
-            <NewChatModal closeModal={closeModal} createChat={createChat} contacts={contacts} /> :
-            <NewContactModal closeModal={closeModal} createContact={createContact} />
+            <NewChatModal closeModal={closeModal} /> :
+            <NewContactModal closeModal={closeModal} />
           }
         </div>
       </div>

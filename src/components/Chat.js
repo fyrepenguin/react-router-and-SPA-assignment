@@ -1,6 +1,8 @@
 import React, { useCallback } from 'react'
+import { useChats } from '../contexts/ChatsProvider';
 
-export default function Chat({ selectedChat }) {
+export default function Chat() {
+  const { selectedChat } = useChats()
 
   const setRef = useCallback(node => {
     if (node) {
